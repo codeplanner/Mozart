@@ -1,0 +1,55 @@
+NOTE TO SELF: Använd endast Activator.CraeteInstance i de fall lagrad ctor saknas.
+
+
+//Remove everything that was loaded... When doing manual mapping
+Mozart.Compose.Clear()
+
+// ## AutoConfiguration
+// By default Mozart will manage all interfaces having the ExportAttribute
+// Mozart will also setup mappings for all classes that implements exported interfaces.
+// Mozart will also setup mappings for all classes that has the ExportAttribute
+
+// ## Composing...
+// You can ask Mozart for each object when you want one.
+// If you do not have references to the assembly that contains implementations you
+// can ask for the interface.
+// So by adding constructors with interfaces that is exported you will get IoC automatically
+
+// Example
+
+	//Definition of export
+	[Export]
+	public interface IA{}
+
+	//Implementation of Export (does not need to be referenced)
+	public class A : IA{}
+
+	//Get tha instance of IA (that would be A)
+	var a = Mozart.Compose.Get<IA>();
+
+	//get all IA´s
+	var as = Mozart.Compose.GetAll<IA>();
+
+// ## Getters
+
+
+// Will return a singleton of the type that maps to I
+// or
+// Will return a new instance of the type that maps to I
+Mozart.Compose.Get<I>() //where I is an interface
+
+Mozart.Compose.Get<I>(typeof(A))
+
+//get type T from interface I
+Mozart.Compose.Get<I,T>();
+
+// ## IoC
+// If you have exports of IA and IB you can have a constructor on a type C like
+
+	public C(IA a, IB b){}
+
+// and then when C is resolved with
+
+	Mozart.Compose.Get<IC>()
+
+// the constructor on C will get IA and IB provided

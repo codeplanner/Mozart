@@ -1,0 +1,7 @@
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart.Playground\bin\Debug\Mozart.Playground.exe
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart.Playground\bin\Debug\Mozart.Playground.pdb
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart.Playground\bin\Debug\Mozart.dll
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart.Playground\bin\Debug\Mozart.pdb
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart.Playground\obj\Debug\Mozart.Playground.csprojResolveAssemblyReference.cache
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart.Playground\obj\Debug\Mozart.Playground.exe
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart.Playground\obj\Debug\Mozart.Playground.pdb

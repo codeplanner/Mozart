@@ -1,0 +1,4 @@
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart\bin\Debug\Mozart.dll
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart\bin\Debug\Mozart.pdb
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart\obj\Debug\Mozart.dll
+C:\Users\Uffe\Documents\GitHub\Mozart\src\Mozart\obj\Debug\Mozart.pdb

@@ -1,0 +1,10 @@
+C:\Users\Uffe\Desktop\Wolverine\Wolverine\bin\Debug\Wolverine.dll
+C:\Users\Uffe\Desktop\Wolverine\Wolverine\bin\Debug\Wolverine.pdb
+C:\Users\Uffe\Desktop\Wolverine\Wolverine\obj\Debug\Wolverine.csprojResolveAssemblyReference.cache
+C:\Users\Uffe\Desktop\Wolverine\Wolverine\obj\Debug\Wolverine.dll
+C:\Users\Uffe\Desktop\Wolverine\Wolverine\obj\Debug\Wolverine.pdb
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine\bin\Debug\Wolverine.dll
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine\bin\Debug\Wolverine.pdb
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine\obj\Debug\Wolverine.csprojResolveAssemblyReference.cache
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine\obj\Debug\Wolverine.dll
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine\obj\Debug\Wolverine.pdb

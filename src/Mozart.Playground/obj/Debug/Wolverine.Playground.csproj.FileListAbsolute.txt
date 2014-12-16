@@ -1,0 +1,14 @@
+C:\Users\Uffe\Desktop\Wolverine\Wolverine.Playground\bin\Debug\Wolverine.Playground.exe
+C:\Users\Uffe\Desktop\Wolverine\Wolverine.Playground\bin\Debug\Wolverine.Playground.pdb
+C:\Users\Uffe\Desktop\Wolverine\Wolverine.Playground\bin\Debug\Wolverine.dll
+C:\Users\Uffe\Desktop\Wolverine\Wolverine.Playground\bin\Debug\Wolverine.pdb
+C:\Users\Uffe\Desktop\Wolverine\Wolverine.Playground\obj\Debug\Wolverine.Playground.csprojResolveAssemblyReference.cache
+C:\Users\Uffe\Desktop\Wolverine\Wolverine.Playground\obj\Debug\Wolverine.Playground.exe
+C:\Users\Uffe\Desktop\Wolverine\Wolverine.Playground\obj\Debug\Wolverine.Playground.pdb
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine.Playground\bin\Debug\Wolverine.Playground.exe
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine.Playground\bin\Debug\Wolverine.Playground.pdb
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine.Playground\bin\Debug\Wolverine.dll
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine.Playground\bin\Debug\Wolverine.pdb
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine.Playground\obj\Debug\Wolverine.Playground.csprojResolveAssemblyReference.cache
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine.Playground\obj\Debug\Wolverine.Playground.exe
+C:\Users\Uffe\Documents\GitHub\Wolverine\src\Wolverine.Playground\obj\Debug\Wolverine.Playground.pdb
