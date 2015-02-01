@@ -67,14 +67,14 @@ namespace Mozart
         /// </summary>
         static Compose()
         {
-            if(!typeof(T).IsInterface)
+            if (!typeof(T).IsInterface)
                 throw new Exception("Repository type T can only be an interface");
-           
-            ExportAttribute = typeof (T).ExportAttribute();
 
-            if(!Compose.ExportedInterfaceFactory.ContainsKey(typeof(T)))
-                Compose.ExportedInterfaceFactory.Add(typeof(T),typeof(T).MakeGenericExport());            
-            
+            ExportAttribute = typeof(T).ExportAttribute();
+
+            if (!Compose.ExportedInterfaceFactory.ContainsKey(typeof(T)))
+                Compose.ExportedInterfaceFactory.Add(typeof(T), typeof(T).MakeGenericExport());
+
             Exports = new List<Type>();
         }
 
@@ -87,26 +87,31 @@ namespace Mozart
         /// <param name="type"></param>
         public static void Add(Type type)
         {
-            if (!CanAddItem(type)) return;            
+            if (!CanAddItem(type)) return;
 
-            //If singleton...
             if (ExportAttribute.InstanceRule == InstanceRule.Singleton)
             {
-                if (!SingletonIsSet)
-                {                    
-                    Singleton = (T)Activator.CreateInstance(type);
-                    SingletonIsSet = true;
-                    return;
-                }
-
-                if (ExportAttribute.Rewritable)
-                {
-                    Singleton = (T)Activator.CreateInstance(type);
-                }
+                AddOrUpdateSingleton(type);
                 return;
             }
-                       
-            Exports.Add(type);            
+
+            Exports.Add(type);
+        }
+
+        private static void AddOrUpdateSingleton(Type type)
+        {
+            if (!SingletonIsSet)
+            {
+                Singleton = (T)Activator.CreateInstance(type);
+                SingletonIsSet = true;
+                return;
+            }
+
+            if (ExportAttribute.Rewritable)
+            {
+                Singleton = (T)Activator.CreateInstance(type);
+            }
+
         }
 
         private static bool CanAddItem(Type type)
@@ -126,14 +131,14 @@ namespace Mozart
         {
             if (ExportAttribute.InstanceRule == InstanceRule.Multiple)
                 Activator.CreateInstance(Exports.First());
-                //throw new Exception("Cant get singleton from type marked as multiple");
+            //throw new Exception("Cant get singleton from type marked as multiple");
 
             return Singleton;
         }
 
         public static T Get<TA>()
         {
-            return Get(typeof (TA));
+            return Get(typeof(TA));
         }
 
         public static T Get(Type t)
@@ -142,13 +147,13 @@ namespace Mozart
                 return Get();
 
             if (t.IsInterface)
-                return (T) Exports.First().GetInstance(); //(T)Activator.CreateInstance(Exports.First());
+                return (T)Exports.First().GetInstance(); //(T)Activator.CreateInstance(Exports.First());
             return (T)Activator.CreateInstance(Exports.First(p => p == t));
         }
 
         public static IList<T> GetAll()
         {
-            return Exports.Select(export => (T) Activator.CreateInstance(export)).ToList();            
-        }       
+            return Exports.Select(export => (T)Activator.CreateInstance(export)).ToList();
+        }
     }
 }

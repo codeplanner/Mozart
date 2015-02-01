@@ -25,6 +25,22 @@ namespace Mozart.Tests
         }
 
         [Fact]
+        public void SingletonIsSameInstance()
+        {
+            Compose<IZoo>.Exports.Clear();
+
+            //Register/Act            
+            Compose<IZoo>.Add(typeof(BostonZoo));
+            Compose<IZoo>.Add(typeof(DallasZoo));
+
+            // Act
+            var zoo1 = Compose<IZoo>.Get();
+            var zoo2 = Compose<IZoo>.Get();
+            //Assert
+            Assert.True(zoo1.Equals(zoo2));
+        }
+
+        [Fact]
         public void CanGetRewrittenPropertySingleton()
         {
             Compose<IZoo>.Exports.Clear();
@@ -130,5 +146,6 @@ namespace Mozart.Tests
             // Assert
             Assert.True(attribute.InstanceRule == InstanceRule.Multiple);
         }
+
     }
 }
