@@ -35,14 +35,10 @@ namespace Mozart.Helpers
 
         public static object[] GetCtorParameters(this ConstructorInfo ctorInfo)
         {
-            var parameters = new List<object>();
-            foreach (var parameterInfo in ctorInfo.GetParameters())
-            {
-                var export = parameterInfo.ParameterType.MakeGenericExport();
-                var method = export.GetMethod("Get", new Type[] { typeof(Type) });
-                parameters.Add(method.Invoke(export, new object[] { parameterInfo.ParameterType }));
-            }
-            return parameters.ToArray();
+            return (from parameterInfo in ctorInfo.GetParameters() 
+                    let export = parameterInfo.ParameterType.MakeGenericExport() 
+                    let method = export.GetMethod("Get", new Type[] {typeof (Type)}) 
+                    select method.Invoke(export, new object[] {parameterInfo.ParameterType})).ToArray();
         }
 
         public static bool IsExported(this Type type)
@@ -85,19 +81,8 @@ namespace Mozart.Helpers
 
         //TODO: move to delegate to avoid reflection
         public static T GetInstance<T>()
-        {
-            var type = typeof (T);
-            //var ctorInfo = type.GetExportableConstructor();
-            //if (ctorInfo == null) return Activator.CreateInstance<T>();
-            //var parameters = ctorInfo.GetCtorParameters();
-
-            //var p = new List<object>();
-            //foreach (var parameter in parameters)
-            //{
-            //    p.Add(parameter.GetType().GetIstance);
-            //}
-            
-            return (T) type.GetInstance();// ?? Activator.CreateInstance<T>();// ctorInfo.Invoke(parameters);
+        {            
+            return (T)typeof(T).GetInstance();
         }
 
         public static object GetInstance(this Type type)
@@ -105,14 +90,7 @@ namespace Mozart.Helpers
             var ctorInfo = type.GetExportableConstructor();
             if (ctorInfo == null) return Activator.CreateInstance(type);
             var parameters = ctorInfo.GetCtorParameters();
-
-            var p = new List<object>();
-            foreach (var parameter in parameters)
-            {
-                p.Add(parameter.GetType().GetInstance());
-            }
-
-            return ctorInfo.Invoke(p.ToArray());
+            return ctorInfo.Invoke(parameters.Select(parameter => parameter.GetType().GetInstance()).ToArray());
         }
     }
 }

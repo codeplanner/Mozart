@@ -41,7 +41,8 @@ namespace Mozart.Helpers
         /// <returns></returns>
         public static IEnumerable<Type> PublicClasses(this Assembly assembly)
         {
-            return assembly.GetExportedTypes().Where(p => p.IsClass && !p.IsAbstract && !p.IsGenericType);
+            return assembly.GetExportedTypes()
+                .Where(p => p.IsClass && !p.IsAbstract && !p.IsGenericType);
         }
 
         /// <summary>
@@ -62,11 +63,11 @@ namespace Mozart.Helpers
         /// <returns></returns>
         public static bool ImplementsExportedInterface(this Type type)
         {
-            var exportOnInterface = Compose.ExportedInterfaceFactory.FirstOrDefault(i => type.GetInterfaces().Contains(i.Key) && !type.IsAbstract);
-            if (exportOnInterface.Key == null)
-                return false;
+            var exportOnInterface = Compose.ExportedInterfaceFactory
+                .SingleOrDefault(i => type.GetInterfaces()
+                .Contains(i.Key) && !type.IsAbstract);
 
-            return exportOnInterface.Key.GetCustomAttributes(typeof(ExportAttribute), false).Any();
+            return exportOnInterface.Key != null && exportOnInterface.Key.HasAttributeOfType<ExportAttribute>();
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Mozart.Helpers
         /// <returns></returns>
         public static bool IsNoExport(this Type type)
         {
-            return type.GetCustomAttributes(typeof(NoExportAttribute), false).Any();
+            return type.HasAttributeOfType<NoExportAttribute>();
         }
 
         /// <summary>
@@ -96,21 +97,29 @@ namespace Mozart.Helpers
         /// <returns></returns>
         public static IEnumerable<Tuple<Type, Type>> ExportedClasses(this Assembly assembly)
         {
-            return assembly.PublicClasses().Where(p => p.IsExport() && !p.IsNoExport()).Select(p => new Tuple<Type, Type>(p, p.ExportedInterface()));
+            return assembly.PublicClasses()
+                .Where(p => p.IsExport() && !p.IsNoExport())
+                .Select(p => new Tuple<Type, Type>(p, p.ExportedInterface()));
         }
 
+
+        /// <summary>
+        /// TODO: Call this method on start and store data to avoid reflection later in runtme
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static Type ExportedInterface(this Type type)
         {
-            var export = type.GetAttributeOfType<ExportAttribute>();// .GetCustomAttributes(typeof(ExportAttribute), false).FirstOrDefault() as ExportAttribute;
+            var exportAttribute = type.GetAttributeOfType<ExportAttribute>();
 
-            return export != null ? export.Type : Compose.ExportedInterfaceFactory.Single(i => type.GetInterfaces().Contains(i.Key) && !type.IsAbstract).Key;
+            return exportAttribute != null ? exportAttribute.Type : Compose.ExportedInterfaceFactory.Single(i => type.GetInterfaces().Contains(i.Key) && !type.IsAbstract).Key;
 
             //return exportOnInterface.Key;            
         }
 
         public static ExportAttribute ExportAttribute(this Type type)
         {
-            return type.GetCustomAttributes(typeof(ExportAttribute), false).FirstOrDefault() as ExportAttribute;
+            return type.GetAttributeOfType<ExportAttribute>();
         }
     }
 }

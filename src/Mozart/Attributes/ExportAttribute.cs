@@ -14,19 +14,19 @@ namespace Mozart.Attributes
         {
             
         }
-        //public ExportAttribute(bool rewritable = false, InstanceRule instanceRule = InstanceRule.Multiple)
-        //{
-        //    InstanceRule = instanceRule;
-        //    Rewritable = rewritable;
-        //}
+        public ExportAttribute(bool rewritable = false, InstanceRule instanceRule = InstanceRule.Multiple)
+        {
+            InstanceRule = instanceRule;
+            Rewritable = rewritable;
+        }
 
-        public ExportAttribute(Type type, bool rewritable = false, InstanceRule instanceRule = InstanceRule.Multiple)
+        public ExportAttribute(Type type, bool rewritable = false, InstanceRule instanceRule = InstanceRule.Multiple):this(rewritable,instanceRule)
         {
             if (!type.IsInterface)
                 throw new Exception("You can only export interfaces");
             InstanceRule = instanceRule;
-            Rewritable = rewritable;
-            Type = type;
+            //Rewritable = rewritable;
+            //Type = type;
         }
 
     }

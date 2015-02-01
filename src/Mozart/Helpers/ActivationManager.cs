@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security;
 using System.Web;
-using System.Web.Compilation;
 using System.Web.Hosting;
 
 namespace Mozart.Helpers
@@ -55,30 +51,32 @@ namespace Mozart.Helpers
                             // Ignore assemblies we can't load. They could be native, etc...
                             _assemblies.Add(Assembly.LoadFrom(assemblyFile));
                         }
-                        catch (Win32Exception ex)
-                        {
-                            //Composable.InvokeErrorActions(new CompositionException(ex,string.Format("Could not load assmebly {0}",assemblyFile)));
-                        }
-                        catch (ArgumentException ex)
-                        {
-                            //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
-                        }
-                        catch (FileNotFoundException ex)
-                        {
-                            //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
-                        }
-                        catch (PathTooLongException ex)
-                        {
-                            //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
-                        }
-                        catch (BadImageFormatException ex)
-                        {
-                            //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
-                        }
-                        catch (SecurityException ex)
-                        {
-                            //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
-                        }
+// ReSharper disable once EmptyGeneralCatchClause
+                        catch{}
+                        //catch (Win32Exception ex)
+                        //{
+                        //    //Composable.InvokeErrorActions(new CompositionException(ex,string.Format("Could not load assmebly {0}",assemblyFile)));
+                        //}
+                        //catch (ArgumentException ex)
+                        //{
+                        //    //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
+                        //}
+                        //catch (FileNotFoundException ex)
+                        //{
+                        //    //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
+                        //}
+                        //catch (PathTooLongException ex)
+                        //{
+                        //    //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
+                        //}
+                        //catch (BadImageFormatException ex)
+                        //{
+                        //    //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
+                        //}
+                        //catch (SecurityException ex)
+                        //{
+                        //    //Composable.InvokeErrorActions(new CompositionException(ex, string.Format("Could not load assmebly {0}", assemblyFile)));
+                        //}
                     }
                 }
 
@@ -102,7 +100,7 @@ namespace Mozart.Helpers
         {
             // When running under ASP.NET, find assemblies in the bin folder.
             // Outside of ASP.NET, use whatever folder WebActivator itself is in    
-            var filter = new List<string>() {"*.dll", "*.exe"};
+            var filter = new List<string> {"*.dll", "*.exe"};
             var directory = GetAssemblyDirectory();
             return filter.SelectMany(f => Directory.GetFiles(directory, f));
         }
@@ -116,20 +114,20 @@ namespace Mozart.Helpers
             //Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
         }
 
-        // Return all the App_Code assemblies
-        private static IEnumerable<Assembly> AppCodeAssemblies
-        {
-            get
-            {
-                // Return an empty list if we;re not hosted or there aren't any
-                if (!HostingEnvironment.IsHosted || !_hasInited || BuildManager.CodeAssemblies == null)
-                {
-                    return Enumerable.Empty<Assembly>();
-                }
+        //// Return all the App_Code assemblies
+        //private static IEnumerable<Assembly> AppCodeAssemblies
+        //{
+        //    get
+        //    {
+        //        // Return an empty list if we;re not hosted or there aren't any
+        //        if (!HostingEnvironment.IsHosted || !_hasInited || BuildManager.CodeAssemblies == null)
+        //        {
+        //            return Enumerable.Empty<Assembly>();
+        //        }
 
-                return BuildManager.CodeAssemblies.OfType<Assembly>();
-            }
-        }
+        //        return BuildManager.CodeAssemblies.OfType<Assembly>();
+        //    }
+        //}
 
         //public static void RunPreStartMethods(/*bool designerMode = false*/)
         //{

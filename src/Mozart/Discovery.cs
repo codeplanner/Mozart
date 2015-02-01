@@ -18,7 +18,7 @@ namespace Mozart
         }
 
         /// <summary>
-        /// Returns tuple with Type,Interface for each exported class in the assembly
+        /// Returns enumerable tuples with [Type,Interface] for each exported class in the assembly
         /// </summary>
         /// <param name="assembly"></param>
         /// <returns></returns>

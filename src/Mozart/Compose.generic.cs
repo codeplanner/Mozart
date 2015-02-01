@@ -48,8 +48,16 @@ namespace Mozart
         /// Contains all exported concrete types for the interface T
         /// </summary>
         public static IList<Type> Exports { get; private set; }
+
+        /// <summary>
+        /// If a singleton export, this will hold the singleton object
+        /// </summary>
         public static T Singleton { get; private set; }
         private static bool SingletonIsSet { get; set; }
+
+        /// <summary>
+        /// The export attribute for the interface
+        /// </summary>
         public static ExportAttribute ExportAttribute { get; private set; }
 
         /// <summary>
@@ -72,8 +80,15 @@ namespace Mozart
 
         public static void Init() { }
 
+        /// <summary>
+        /// Add a type to the interface T,
+        /// the type has to implement the interface T
+        /// </summary>
+        /// <param name="type"></param>
         public static void Add(Type type)
         {
+            if (!CanAddItem(type)) return;            
+
             //If singleton...
             if (ExportAttribute.InstanceRule == InstanceRule.Singleton)
             {
@@ -90,17 +105,13 @@ namespace Mozart
                 }
                 return;
             }
-
-            //Check individual export data
-            if (CanAddItem(type))
-            {             
-                Exports.Add(type);
-            }
+                       
+            Exports.Add(type);            
         }
 
         private static bool CanAddItem(Type type)
         {
-            return !Exports.Contains(type) && !type.IsInterface;
+            return !Exports.Contains(type) && !type.IsInterface && typeof(T).IsAssignableFrom(type);
         }
 
 

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.CodeDom;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using Mozart.Attributes;
 using Mozart.Helpers;
 using Mozart.Model;
@@ -10,13 +14,13 @@ namespace Mozart.Playground
         string Says();
     }
 
-    [Export(typeof(IManager), true, InstanceRule.Singleton)]
+    [Export(true, InstanceRule.Singleton)]
     public interface IManager
     {
         string Name { get; }
     }
 
-    [Export(typeof(IZoo), true, InstanceRule.Singleton)]
+    [Export(true, InstanceRule.Singleton)]
     public interface IZoo
     {
         string Name { get; }
@@ -102,8 +106,70 @@ namespace Mozart.Playground
     }
     class Program
     {
+        delegate T ObjectActivator<T>(params object[] args);
+        private static ObjectActivator<T> GetActivator<T>
+    (ConstructorInfo ctor)
+        {
+            Type type = ctor.DeclaringType;
+            ParameterInfo[] paramsInfo = ctor.GetParameters();
+
+            //create a single param of type object[]
+            ParameterExpression param =
+                Expression.Parameter(typeof(object[]), "args");
+
+            Expression[] argsExp =
+                new Expression[paramsInfo.Length];
+
+            //pick each arg from the params array 
+            //and create a typed expression of them
+            for (int i = 0; i < paramsInfo.Length; i++)
+            {
+                Expression index = Expression.Constant(i);
+                Type paramType = paramsInfo[i].ParameterType;
+
+                Expression paramAccessorExp =
+                    Expression.ArrayIndex(param, index);
+
+                Expression paramCastExp =
+                    Expression.Convert(paramAccessorExp, paramType);
+
+                argsExp[i] = paramCastExp;
+            }
+
+            //make a NewExpression that calls the
+            //ctor with the args we just created
+            NewExpression newExp = Expression.New(ctor, argsExp);
+
+            //create a lambda with the New
+            //Expression as body and our param object[] as arg
+            LambdaExpression lambda =
+                Expression.Lambda(typeof(ObjectActivator<T>), newExp, param);
+
+            //compile it
+            ObjectActivator<T> compiled = (ObjectActivator<T>)lambda.Compile();
+            return compiled;
+        }
         static void Main(string[] args)
-        {            
+        {
+            
+            var ctor = typeof (Cat).GetExportableConstructor();
+
+            ObjectActivator<Cat> createdActivator = GetActivator<Cat>(ctor);
+            Cat instance = createdActivator(new DallasZoo(), new MrJones());
+            Console.WriteLine(instance.Says());
+            //var p = ctor.GetCtorParameters() as ParameterInfo[];
+            ////var le = Expression.Lambda(
+            ////                            Expression.New(ctor,p.Select(x => Expression.Parameter(x.GetType()))));
+
+            ////var le = Expression.Lambda(Expression.New(ctor, p.Select(x => Expression.Parameter(x.GetType()))),p.Select(y => y));
+
+            ////var lambda = Expression.Lambda(Expression.New(ctor, p.Select(x => Expression.Parameter(x.ParameterType, x.Name))));
+
+            //var lambda = Expression.Lambda(Expression.New(ctor, Expression.Parameter(typeof(IZoo)), Expression.Parameter(typeof(IManager))));
+            //var func = lambda.Compile();
+            
+            //var asas = func.DynamicInvoke(new DallasZoo(), new MrJones());
+            //Console.WriteLine(asas.GetType());
             //Export<IA>.Add(new A());
 
             //var exp =  Export<IA>.GetAll();

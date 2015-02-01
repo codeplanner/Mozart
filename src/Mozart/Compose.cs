@@ -13,16 +13,13 @@ namespace Mozart
 
         /// <summary>
         /// To access the ctor with exported types with ease
+        /// TODO: NOT YET IMPLEMENTED
         /// </summary>
         public static IDictionary<Type,IDelegateInfo> ExportedInterfaceCtorFactory = new Dictionary<Type, IDelegateInfo>();
 
         static Compose()
         {
             _Compose();
-
-            // Build generic types...
-
-            // 2: Find exported classes
         }
 
         private static void _Compose()
