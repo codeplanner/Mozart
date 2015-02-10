@@ -5,6 +5,10 @@ using System.Reflection;
 
 namespace Mozart.Helpers
 {
+    /// <summary>
+    /// These helpers should only be used when loading types into memory.
+    /// After first load the optimal thing is to use the compiled expressions.
+    /// </summary>
     public static class ReflectionHelpers
     {
         //public static IDictionary<Type,Type> GenericExportInstances = new Dictionary<Type, Type>(); 

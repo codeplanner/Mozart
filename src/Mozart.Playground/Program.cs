@@ -154,9 +154,12 @@ namespace Mozart.Playground
             
             var ctor = typeof (Cat).GetExportableConstructor();
 
-            ObjectActivator<Cat> createdActivator = GetActivator<Cat>(ctor);
-            Cat instance = createdActivator(new DallasZoo(), new MrJones());
+            var ctp = ctor.GetCtorParameters();
+
+            var createdActivator = GetActivator<Cat>(ctor);
+            Cat instance = createdActivator(ctp);
             Console.WriteLine(instance.Says());
+
             //var p = ctor.GetCtorParameters() as ParameterInfo[];
             ////var le = Expression.Lambda(
             ////                            Expression.New(ctor,p.Select(x => Expression.Parameter(x.GetType()))));

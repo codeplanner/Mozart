@@ -64,11 +64,8 @@ namespace Mozart.Tests
             Compose<IAnimal>.Add(typeof(Lion));
             Compose<IAnimal>.Add(typeof(Dog));
             Compose<IAnimal>.Add(typeof(Cat));
-
             Compose<IZoo>.Add(typeof(DallasZoo));
-
             Compose<IManager>.Add(typeof(MrJones));
-
             Compose<ICar>.Add(typeof(Car));
 
             //Act
@@ -89,16 +86,13 @@ namespace Mozart.Tests
             Compose<IManager>.Exports.Clear();
             Compose<IZoo>.Exports.Clear();
             Compose<ICar>.Exports.Clear();
-
             Compose<IAnimal>.Add(typeof(Lion));
             Compose<IAnimal>.Add(typeof(Dog));
             Compose<IAnimal>.Add(typeof(Cat));
-
             Compose<ICar>.Add(typeof(Car));
-
             Compose<IZoo>.Add(typeof(DallasZoo));
-
             Compose<IManager>.Add(typeof(MrJones));
+
             //Act            
             var obj = ReflectionHelpers.GetInstance<Cat>();
 
